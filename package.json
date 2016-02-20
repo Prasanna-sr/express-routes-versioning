@@ -1,0 +1,22 @@
+{
+  "name": "express-routes-versioning",
+  "version": "0.0.1",
+  "description": "Node.js module provides versioning for expressjs routes/api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Prasanna-sr/express-routes-versioning.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Prasanna-sr/express-routes-versioning/issues"
+  },
+  "homepage": "https://github.com/Prasanna-sr/express-routes-versioning",
+  "devDependencies": {
+    "express": "^4.13.4"
+  }
+}
