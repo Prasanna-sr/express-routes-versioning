@@ -9,8 +9,8 @@ router.use(function(req, res, next) {
    next();
 })
 router.get('/test', routesVersioning({
-   "1.0.0": respondV1,
-   "2.0.1": respondV2,
+   "^1.0.0": respondV1,
+   "^2.2.1": respondV2,
    "3.0.0": respondV3,
 }));
 
@@ -21,6 +21,7 @@ function respondV1(req, res, next) {
 function respondV2(req, res, next) {
    res.status(200).send('ok v2');
 }
+
 function respondV3(req, res, next) {
    res.status(200).send('ok v3');
 }

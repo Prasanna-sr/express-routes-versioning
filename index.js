@@ -6,23 +6,40 @@ function routesVersioning() {
 
          if (typeof(args) === 'object') {
             if (require('util').isArray(args)) {
-
+                //When input is of type Array
             } else {
+                //When input is of type Object
+                var keys = Object.keys(args);
+                var key;
+                var tempKey;
+                var versionArr;
                if (!version) {
-                  var key = findLatestVersion(Object.keys(args));
+                  key = findLatestVersion(keys);
                   args[key].call(that, req, res, next);
                   return;
                }
-               var keys = Object.keys(args);
+
                for (var i = 0; i < keys.length; i++) {
-                  var key = keys[i];
-                  if (key === version) {
+                  key = keys[i];
+
+                   versionArr = version.split('.');
+                  if (key[0] === '~') {
+                      tempKey = key.substr(1);
+                      tempKey = tempKey.split('.').slice(0,2).join('.');
+                      version = versionArr.slice(0, 2).join('.');
+                      version
+                  } else if (key[0] === '^') {
+                      tempKey = key.substr(1);
+                      tempKey = tempKey.split('.').slice(0,1).join('.');
+                      version = versionArr.slice(0, 1).join('.');
+                  }
+                  if (tempKey === version) {
                      args[key].call(that, req, res, next);
                      return;
                   }
                }
                //get the latest version when no version match found
-               var key = findLatestVersion(Object.keys(args));
+               key = findLatestVersion(keys);
                args[key].call(that, req, res, next);
             }
          } else {
@@ -43,6 +60,9 @@ function findLatestVersion(versions) {
    var maxTotal;
    for (var i = 0; i < versions.length; i++) {
       var key = versions[i];
+      if (key[0] === '^' || key[0] === '~') {
+          key = key.substr(1);
+      }
       //handles these type of version '1', '1.0', '1.0.0'
       var values = key.split('.');
       var total = 0;
