@@ -20,8 +20,8 @@ function routesVersioning() {
                    } else {
                        key = findLatestVersion(keys);
                        args[key].call(that, req, res, next);
-                       return;
                    }
+                   return;
                }
 
                for (var i = 0; i < keys.length; i++) {
