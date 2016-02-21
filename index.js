@@ -1,5 +1,5 @@
 function routesVersioning() {
-   return function(args) {
+   return function(args, notFoundMiddleware) {
       return function(req, res, next) {
          var that = this;
          var version = getVersion(req);
@@ -13,34 +13,44 @@ function routesVersioning() {
                 var key;
                 var tempKey;
                 var versionArr;
+                var tempVersion;
                if (!version) {
-                  key = findLatestVersion(keys);
-                  args[key].call(that, req, res, next);
-                  return;
+                   if(notFoundMiddleware) {
+                       notFoundMiddleware.call(that, req, res, next);
+                   } else {
+                       key = findLatestVersion(keys);
+                       args[key].call(that, req, res, next);
+                       return;
+                   }
                }
 
                for (var i = 0; i < keys.length; i++) {
                   key = keys[i];
-
                    versionArr = version.split('.');
                   if (key[0] === '~') {
                       tempKey = key.substr(1);
                       tempKey = tempKey.split('.').slice(0,2).join('.');
-                      version = versionArr.slice(0, 2).join('.');
-                      version
+                      tempVersion = versionArr.slice(0, 2).join('.');
                   } else if (key[0] === '^') {
                       tempKey = key.substr(1);
                       tempKey = tempKey.split('.').slice(0,1).join('.');
-                      version = versionArr.slice(0, 1).join('.');
+                      tempVersion = versionArr.slice(0, 1).join('.');
+                  } else {
+                      tempKey = key;
+                      tempVersion = version;
                   }
-                  if (tempKey === version) {
+                  if (tempKey === tempVersion) {
                      args[key].call(that, req, res, next);
                      return;
                   }
                }
-               //get the latest version when no version match found
-               key = findLatestVersion(keys);
-               args[key].call(that, req, res, next);
+               if (notFoundMiddleware) {
+                   notFoundMiddleware.call(that, req, res, next);
+               } else {
+                   //get the latest version when no version match found
+                   key = findLatestVersion(keys);
+                   args[key].call(that, req, res, next);
+               }
             }
          } else {
             console.log('Input has to be either an object or array');
