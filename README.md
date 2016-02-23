@@ -22,19 +22,28 @@ Simple node.js module provides semver versioning for expressjs routes/api.
        res.status(200).send('ok v2');
     }
 
-* **How version is determined ?**
+
+
+`routesVersioning(Options, NoMatchFoundCallback)`
+
+**Options** - object, containing version in semver format (supports ^,~ symbols) and function callback (connect middleware) to invoke when the request matches the version.
+
+**NoMatchFoundCallback** (optional)- called if request version doesn't match the version provided in the options. If not provided latest version is called.
+
+
+* **How version is determined for each request ?**
 
     Default behaviour is to use `accept-version` headers from the client.
     This can be overridden by specifying version in `req.version` property.
 
 * **What format of versioning is supported ?**
 
-    semver versioning is supported. Simple version number can also be passed which is converted to semver versioning.
+    semver versioning is supported. Simple version format like 1, 1.1 can also be passed which is converted to semver versioning.
 
 * **How versions are matched ?**
 
     semver versioning is used to match version if versions are provided in semver format else direct mapping is used (for versions like 1, 1.1)
-    If no versions are matched, default behaviour is to map most recent version, if `NoMatchFoundParameter` is specified then that would be called instead.
+    If no versions are matched, default behaviour is to map most recent version, if `NoMatchFoundCallback` is specified then that would be called instead.
 
 ## Examples
 
