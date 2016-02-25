@@ -1,4 +1,8 @@
 # Express routes versioning
+
+[![Build Status](https://travis-ci.org/Prasanna-sr/express-routes-versioning.svg?branch=master)](https://travis-ci.org/Prasanna-sr/express-routes-versioning) [![Coverage Status](https://coveralls.io/repos/github/Prasanna-sr/express-routes-versioning/badge.svg?branch=master)](https://coveralls.io/github/Prasanna-sr/express-routes-versioning?branch=master)
+
+
 Simple node.js module provides versioning for expressjs routes/api.
 
 ## Install
