@@ -17,9 +17,11 @@
   },
   "homepage": "https://github.com/Prasanna-sr/express-routes-versioning",
   "devDependencies": {
+    "coveralls": "^2.11.6",
     "express": "^4.13.4",
     "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
+    "mocha-lcov-reporter": "^1.2.0",
     "sinon": "^1.17.3"
   }
 }
