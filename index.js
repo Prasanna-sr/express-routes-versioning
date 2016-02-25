@@ -1,60 +1,54 @@
 function routesVersioning() {
    return function(args, notFoundMiddleware) {
-       if (!args || typeof(args) !== 'object' ||
-       require('util').isArray(args)) {
-           console.log('Input has to be either an object or array');
-           return -1;
-       }
+      if (!args || typeof(args) !== 'object' ||
+         require('util').isArray(args)) {
+         console.log('Input has to be either an object or array');
+         return -1;
+      }
       return function(req, res, next) {
          var that = this;
          var version = getVersion(req);
-         if ((args && typeof(args) === 'object') &&
-         !require('util').isArray(args)) {
-            //When input is of type Object
-            var keys = Object.keys(args);
-            var key;
-            var tempKey;
-            var versionArr;
-            var tempVersion;
-            if (!version) {
-               if (notFoundMiddleware) {
-                  notFoundMiddleware.call(that, req, res, next);
-               } else {
-                  key = findLatestVersion(keys);
-                  args[key].call(that, req, res, next);
-               }
-               return;
-            }
-
-            for (var i = 0; i < keys.length; i++) {
-               key = keys[i];
-               versionArr = version.split('.');
-               if (key[0] === '~') {
-                  tempKey = key.substr(1);
-                  tempKey = tempKey.split('.').slice(0, 2).join('.');
-                  tempVersion = versionArr.slice(0, 2).join('.');
-               } else if (key[0] === '^') {
-                  tempKey = key.substr(1);
-                  tempKey = tempKey.split('.').slice(0, 1).join('.');
-                  tempVersion = versionArr.slice(0, 1).join('.');
-               } else {
-                  tempKey = key;
-                  tempVersion = version;
-               }
-               if (tempKey === tempVersion) {
-                  args[key].call(that, req, res, next);
-                  return;
-               }
-            }
+         var keys = Object.keys(args);
+         var key;
+         var tempKey;
+         var versionArr;
+         var tempVersion;
+         if (!version) {
             if (notFoundMiddleware) {
                notFoundMiddleware.call(that, req, res, next);
             } else {
-               //get the latest version when no version match found
                key = findLatestVersion(keys);
                args[key].call(that, req, res, next);
             }
+            return;
+         }
+
+         for (var i = 0; i < keys.length; i++) {
+            key = keys[i];
+            versionArr = version.split('.');
+            if (key[0] === '~') {
+               tempKey = key.substr(1);
+               tempKey = tempKey.split('.').slice(0, 2).join('.');
+               tempVersion = versionArr.slice(0, 2).join('.');
+            } else if (key[0] === '^') {
+               tempKey = key.substr(1);
+               tempKey = tempKey.split('.').slice(0, 1).join('.');
+               tempVersion = versionArr.slice(0, 1).join('.');
+            } else {
+               tempKey = key;
+               tempVersion = version;
+            }
+            if (tempKey === tempVersion) {
+               args[key].call(that, req, res, next);
+               return;
+            }
+         }
+         if (notFoundMiddleware) {
+            notFoundMiddleware.call(that, req, res, next);
          } else {
-            console.log('Input has to be either an object or array');
+            //get the latest version when no version match found
+            key = findLatestVersion(keys);
+            args[key].call(that, req, res, next);
          }
       }
    }

@@ -18,6 +18,8 @@
   "homepage": "https://github.com/Prasanna-sr/express-routes-versioning",
   "devDependencies": {
     "express": "^4.13.4",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
     "sinon": "^1.17.3"
   }
 }
