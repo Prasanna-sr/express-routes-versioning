@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Prasanna-sr/express-routes-versioning",
   "devDependencies": {
-    "express": "^4.13.4"
+    "express": "^4.13.4",
+    "sinon": "^1.17.3"
   }
 }

@@ -1,10 +1,15 @@
 function routesVersioning() {
    return function(args, notFoundMiddleware) {
+       if (!args || typeof(args) !== 'object' ||
+       require('util').isArray(args)) {
+           console.log('Input has to be either an object or array');
+           return -1;
+       }
       return function(req, res, next) {
          var that = this;
          var version = getVersion(req);
-
-         if (typeof(args) === 'object') {
+         if ((args && typeof(args) === 'object') &&
+         !require('util').isArray(args)) {
             //When input is of type Object
             var keys = Object.keys(args);
             var key;
