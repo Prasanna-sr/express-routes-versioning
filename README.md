@@ -31,7 +31,7 @@ Follows semver versioning format. Supports '^, ~' symbols for matching version n
        res.status(200).send('ok v2');
     }
 ```
-This might appear as an anti pattern considering how npm versioning works, where client controls the version. Here server could control the version of the client, assuming client trust the server fully. Typically the client and server belong to the same company in these cases.
+Supporting '^,~' on server might appear as an anti-pattern considering how npm versioning works, where client controls the version. Here server controls the version (or it may not), and client fully trust the server. Typically the client and server belong to the same organization in these cases.
 
 **API**
 

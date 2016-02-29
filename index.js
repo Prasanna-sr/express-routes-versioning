@@ -54,41 +54,47 @@ function routesVersioning() {
    }
 }
 
+
 /**
  * Given an array of versions, returns the latest version.
  * Follows semver versioning rules.
  * Supports version types: 1, 1.0, 0.1, 1.0.0
  * Note: 1 is treated as 1.0.0
  **/
-function findLatestVersion(versions) {
-   var valueTable = {};
-   var maxTotal;
-   for (var i = 0; i < versions.length; i++) {
-      var key = versions[i];
-      if (key[0] === '^' || key[0] === '~') {
-         key = key.substr(1);
-      }
-      //handles these type of version '1', '1.0', '1.0.0'
-      var values = key.split('.');
-      var total = 0;
-      for (var j = 0; j < values.length; j++) {
-         var no = Number(values[j]);
-         if (!isNaN(values[j])) {
-            if (j === 0) {
-               total = total + no * 1000;
-            } else if (j === 1) {
-               total = total + no * 100;
-            } else {
-               total = total + no;
+function  findLatestVersion(versions) {
+    versions.sort(function(v1, v2) {
+        var v1Arr = v1.split('.');
+        var v2Arr = v2.split('.');
+        v1Arr[0] = v1Arr[0].replace('^', '');
+        v1Arr[0] = v1Arr[0].replace('~', '');
+        v2Arr[0] = v2Arr[0].replace('^', '');
+        v2Arr[0] = v2Arr[0].replace('~', '');
+
+        for (var i = 0; i < 2; i ++) {
+            if(!v1Arr[i]) {
+                v1Arr[i] = 0;
             }
-         } else {
-            break;
-         }
-      }
-      valueTable[total] = key;
-   }
-   maxTotal = Math.max.apply(Math, Object.keys(valueTable));
-   return valueTable[maxTotal];
+            if(!v2Arr[i]) {
+                v2Arr[i] = 0;
+            }
+        }
+        if (isNaN(v2Arr[0]) || v1Arr[0] > v2Arr[0]) {
+            return 1;
+        } else if (isNaN(v1Arr[0]) || v1Arr[0] < v2Arr[0]) {
+            return -1;
+        } else if (isNaN(v2Arr[1]) || v1Arr[1] > v2Arr[1]){
+            return 1;
+        } else if (isNaN(v1Arr[1]) || v1Arr[1] < v2Arr[1]) {
+            return -1;
+        } else if (isNaN(v2Arr[2]) || v1Arr[2] > v2Arr[2]) {
+            return 1;
+        } else if (isNaN(v1Arr[2]) || v1Arr[2] < v2Arr[2]) {
+            return -1;
+        } else {
+            return 0;
+        }
+    });
+    return versions[versions.length -1];
 }
 /**
  * Gets the version of the application either from accept-version headers

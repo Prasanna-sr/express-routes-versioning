@@ -94,13 +94,18 @@ describe('routes versioning', function() {
          assert.ok(NoMatchFoundSpy.calledOnce);
          assert.ok(NoMatchFoundSpy.calledWith(req, res, next));
       });
-   it('when multiple version are provided, and no matching version found ' +
+   it.only('when multiple version are provided, and no matching version found ' +
       'latest version is called, if NoMatchFoundCallback is not provided',
       function() {
          var version1Spy = sinon.spy();
          var version2Spy = sinon.spy();
          var middleware = routesVersioning({
+             "2.0.2": sinon.spy(),
+             "~2.3.0": sinon.spy(),
             "1.2.1": version1Spy,
+            "2.0.0": sinon.spy(),
+            "~1.4.4": sinon.spy(),
+            "1.22.0": sinon.spy(),
             "2.3.1": version2Spy,
             "null": sinon.spy()
          });
