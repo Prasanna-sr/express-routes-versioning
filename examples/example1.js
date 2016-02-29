@@ -16,7 +16,7 @@ function respondV1(req, res, next) {
 }
 
 //curl -s -H 'accept-version: 2.2.0' localhost:3000/test
-//Anything on or between 2.2.0 to 2.2.9
+//Anything from 2.2.0 to 2.2.9
 function respondV2(req, res, next) {
    res.status(200).send('ok v2');
 }

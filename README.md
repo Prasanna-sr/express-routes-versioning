@@ -18,15 +18,18 @@ Follows semver versioning format. Supports '^, ~' symbols for matching version n
     app.listen(3000);
 
     app.get('/test', routesVersioning({
-       "^1.0.0": respondV1,
+       "1.0.0": respondV1,
        "~2.2.1": respondV2
     }));
 
-    // All versions starting with 1.* matches this function
+    // curl -s -H 'accept-version: 1.0.0' localhost:3000/test
+    // version 1.0.0 or 1.0 or 1 !
     function respondV1(req, res, next) {
        res.status(200).send('ok v1');
     }
-    // All versions starting with 2.2.* matches this function
+
+    //curl -s -H 'accept-version: 2.2.0' localhost:3000/test
+    //Anything from 2.2.0 to 2.2.9
     function respondV2(req, res, next) {
        res.status(200).send('ok v2');
     }
@@ -37,26 +40,20 @@ Supporting '^,~' on server might appear as an anti-pattern considering how npm v
 
 `routesVersioning(Options, NoMatchFoundCallback)`
 
-**Options** - object, containing version in semver format (supports ^,~ symbols as key and function callback (as a connect middleware) to invoke when the request matches the version as value. Note: Versions are expected to be mutually exclusive, as order of execution of the version couldn't be determined.
+**Options** - object, containing version in semver format (supports ^,~ symbols) as key and function callback (connect middleware format) to invoke when the request matches the version as value. Note: Versions are expected to be mutually exclusive, as order of execution of the version couldn't be determined.
 
-**NoMatchFoundCallback** (optional)- called if request version doesn't match the version provided in the options. If not provided latest version is called.
-- **How version is determined for each request ?**
+**NoMatchFoundCallback** (optional)- called if request version doesn't match the version provided in the options. If this callback is not provided latest version callback is called.
 
-    Default behaviour is to use `accept-version` headers from the client.
 
-    This can be overridden by using a middleware and providing version in `req.version` property.
+**How version is determined for each request ?**
 
-- **What format of versioning is supported ?**
+Default behaviour is to use `accept-version` headers from the client.
 
-    semver versioning is supported. Simple version format like 1, 1.1 can also be passed which is converted to semver versioning.
-    Note: '^,~' symbols are not supported while passing the version from the client.
+This can be overridden by using a middleware and providing version in `req.version` property.
 
-- **How versions are matched ?**
+**How versions are matched ?**
 
-    semver versioning is used to match version if versions are provided in semver format else direct mapping is used (for versions like 1, 1.1)
-
-    If no versions are matched, default behaviour is to map most recent version, if `NoMatchFoundCallback` is specified then that would be called instead.
-
+semver versioning format is used to match version if versions are provided in semver format, supports ^,~ symbols on the server, else direct mapping is used (for versions like 1, 1.1)
 
 ## Examples
 
