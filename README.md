@@ -58,7 +58,9 @@ This might appear as an anti pattern considering how npm versioning works, where
     If no versions are matched, default behaviour is to map most recent version, if `NoMatchFoundCallback` is specified then that would be called instead.
 
 
-Examples are avaialbe [here](https://github.com/Prasanna-sr/express-routes-versioning/tree/master/examples)
+## Examples
+
+Examples are available [here](https://github.com/Prasanna-sr/express-routes-versioning/tree/master/examples)
 
 ## Test
 
