@@ -94,7 +94,7 @@ describe('routes versioning', function() {
          assert.ok(NoMatchFoundSpy.calledOnce);
          assert.ok(NoMatchFoundSpy.calledWith(req, res, next));
       });
-   it.only('when multiple version are provided, and no matching version found ' +
+   it('when multiple version are provided, and no matching version found ' +
       'latest version is called, if NoMatchFoundCallback is not provided',
       function() {
          var version1Spy = sinon.spy();

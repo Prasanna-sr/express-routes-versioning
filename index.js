@@ -29,6 +29,7 @@ function routesVersioning() {
             if (key[0] === '~') {
                tempKey = key.substr(1);
                tempKey = tempKey.split('.').slice(0, 2).join('.');
+                versionArr[1] = versionArr[1] || 0;
                tempVersion = versionArr.slice(0, 2).join('.');
             } else if (key[0] === '^') {
                tempKey = key.substr(1);
@@ -36,7 +37,9 @@ function routesVersioning() {
                tempVersion = versionArr.slice(0, 1).join('.');
             } else {
                tempKey = key;
-               tempVersion = version;
+               versionArr[1] = versionArr[1] || 0;
+               versionArr[2] = versionArr[2] || 0;
+               tempVersion = versionArr.join('.');
             }
             if (tempKey === tempVersion) {
                args[key].call(that, req, res, next);
