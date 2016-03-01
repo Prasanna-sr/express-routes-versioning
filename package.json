@@ -10,7 +10,8 @@
     "type": "git",
     "url": "https://github.com/Prasanna-sr/express-routes-versioning.git"
   },
-  "author": "",
+  "keywords": ["routes", "api", "restful", "express", "version", "versioning"],
+  "author": "Prasanna Ramanujam",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Prasanna-sr/express-routes-versioning/issues"
