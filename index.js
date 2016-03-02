@@ -2,7 +2,7 @@ function routesVersioning() {
    return function(args, notFoundMiddleware) {
       if (!args || typeof(args) !== 'object' ||
          require('util').isArray(args)) {
-         console.log('Input has to be either an object or array');
+         console.log('Input has to be either an object');
          return -1;
       }
       return function(req, res, next) {
