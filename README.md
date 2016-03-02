@@ -1,7 +1,7 @@
 # Express routes versioning
 
 [![Build Status](https://travis-ci.org/Prasanna-sr/express-routes-versioning.svg?branch=master)](https://travis-ci.org/Prasanna-sr/express-routes-versioning) [![Coverage Status](https://coveralls.io/repos/github/Prasanna-sr/express-routes-versioning/badge.svg?branch=master)](https://coveralls.io/github/Prasanna-sr/express-routes-versioning?branch=master)
-[![npm version](https://badge.fury.io/js/auditlogger.svg)](http://badge.fury.io/js/auditlogger)
+[![npm version](https://badge.fury.io/js/express-routes-versioning.svg)](http://badge.fury.io/js/express-routes-versioning)
 
 
 Simple node.js module provides versioning for expressjs routes/api.
