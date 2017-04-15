@@ -154,4 +154,15 @@ describe('routes versioning', function() {
                assert.ok(version2Spy.calledOnce);
                assert.ok(version2Spy.calledWith(req, res, next));
             });
+    it('when version provided as integer, version should cast to string',
+      function() {
+         var version1Spy = sinon.spy();
+         var middleware = routesVersioning({
+            "1": version1Spy,
+         });
+         req.version = 1;
+         middleware(req, res, next);
+         assert.ok(version1Spy.calledOnce);
+         assert.ok(version1Spy.calledWith(req, res, next));
+      });
 });
