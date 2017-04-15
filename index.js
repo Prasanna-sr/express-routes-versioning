@@ -110,7 +110,7 @@ function getVersion(req) {
          version = req.headers['accept-version'];
       }
    } else {
-      version = req.version;
+      version = String(req.version);
    }
    return version;
 }
